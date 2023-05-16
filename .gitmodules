@@ -1,0 +1,3 @@
+[submodule "innoscripta-challange"]
+	path = innoscripta-challange
+	url = git@github.com:zombozo12/innoscripta-challange.git
