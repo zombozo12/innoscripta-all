@@ -1,6 +1,6 @@
 [submodule "innoscripta-challange"]
 	path = innoscripta-challange
-	url = git@github.com:zombozo12/innoscripta-challange.git
+	url = https://github.com/zombozo12/innoscripta-challange
 [submodule "innoscripta-frontend"]
 	path = innoscripta-frontend
-	url = git@github.com:zombozo12/innoscripta-frontend.git
+	url = https://github.com/zombozo12/innoscripta-frontend
