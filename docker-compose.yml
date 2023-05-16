@@ -1,0 +1,66 @@
+version: "3.8"
+services:
+    db:
+        container_name: innoscripta-db
+        image: postgres:alpine
+        restart: always
+        environment:
+            POSTGRES_PASSWORD: ZhBT5&NcwQBcnxV!84cAE%
+            POSTGRES_USER: root
+            POSTGRES_DB: innoscripta-db
+        networks:
+            - network
+        volumes:
+            - db:/var/lib/postgresql/data
+    api:
+        container_name: innoscripta-api
+        build:
+          context: innoscripta-challange/
+          dockerfile: docker/Dockerfile
+        restart: always
+        working_dir: /var/www
+        depends_on:
+            - db
+        volumes:
+            - backend:/var/www/storage
+        ports:
+            - "8001:80"
+        environment:
+            - APP_NAME="Innoscripta API"
+            - APP_ENV=local
+            - APP_DEBUG=false
+            - APP_URL=http://localhost:8000/
+            - DB_CONNECTION=pgsql
+            - DB_HOST=db
+            - DB_DATABASE=innoscripta-db
+            - DB_PORT=5432
+            - DB_USERNAME=root
+            - DB_PASSWORD=ZhBT5&NcwQBcnxV!84cAE%
+        networks:
+            - network
+    node:
+        container_name: innoscripta-frontend
+        build:
+          context: innoscripta-frontend/
+          dockerfile: docker/Dockerfile
+        restart: always
+        working_dir: /app
+        depends_on:
+          - api
+          - db
+        volumes:
+          - frontend:/app
+        ports:
+          - "8081:3000"
+        networks:
+          - network
+volumes:
+    db:
+        driver: local
+    backend:
+        driver: local
+    frontend:
+        driver: local
+networks:
+    network:
+        driver: bridge
